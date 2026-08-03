@@ -84,6 +84,27 @@ Do not introduce:
 - Update docs/implementation-plan.md when sequencing or ownership changes.
 - Keep architectural decisions in sync with the implementation.
 
+## Technical Decision Culture
+- Every technical decision made during development must be recorded in the Decision Log section of `docs/implementation-plan.md`.
+- Decisions include technology choices, architectural trade-offs, deferred scope, and provider selections.
+- Each decision entry must include the context, the options considered, the chosen option, and the reason.
+- Do not overwrite previous decisions. Append new entries or mark superseded decisions with a date and reason.
+- When a decision contradicts an earlier one, reference the original and explain what changed.
+- Treat the Decision Log as the canonical record of why the codebase looks the way it does.
+
+## Feature Development Lifecycle
+- Every feature must begin with a written spec or plan before implementation starts.
+- The spec must reference the relevant PRD, UX, and technical spec sections.
+- After implementation and testing, the feature must be reviewed and skepted against the original spec and plan.
+- Skepting means explicitly checking: does the implementation match what was planned? What drifted? Was the drift justified?
+- If the implementation diverges from the plan, the divergence must be documented and the plan updated.
+- Do not consider a feature done until the skept pass is complete.
+
+## Common Repo Mistakes
+- Track recurring development mistakes and anti-patterns in `docs/common-repo-mistakes.md`.
+- Update that file whenever a pattern of mistakes is observed during reviews or retrospectives.
+- Use it as a living checklist that developers review before submitting changes.
+
 ## Safety and Quality Notes
 - Avoid copyright-risky language such as clone, copy, or recreate an existing creator’s work.
 - Use consistent terminology: Brand Brain, Creative Vault, Creative Plan, Generation, Publishing.

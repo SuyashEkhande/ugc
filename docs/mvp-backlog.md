@@ -313,14 +313,16 @@ A story is done when:
 ### Stories
 #### E5-S1 - Create the generation provider interface
 - User story: As the backend, I want a provider interface, so that the concrete video model can change without affecting product flow.
-- Why it exists: the provider is intentionally unresolved until integration time.
-- Source artifact references: [MVP Technical Spec](mvp-technical-spec.md) AI Provider and Implementation Notes, [Implementation Plan](implementation-plan.md) Grooming Round 1 and Decision Log.
+- Why it exists: the provider is unresolved; the system builds against a mock output contract until a real provider is integrated.
+- Source artifact references: [MVP Technical Spec](mvp-technical-spec.md) AI Provider and Implementation Notes, [Implementation Plan](implementation-plan.md) Grooming Round 1, Decision Log (Generation Provider Strategy).
 - Acceptance criteria:
   - Generation calls route through a provider interface.
   - The request shape is provider-agnostic.
+  - A mock provider implementation exists that returns synthetic outputs matching the contract shape.
+  - The mock contract covers: script text, storyboard frames (image URLs), rendered video (MP4 URL), metadata (duration, resolution, provider job ID).
   - The implementation can be swapped without changing project logic.
-- Implementation notes: keep the adapter narrow and explicit.
-- Test notes: add interface and contract tests.
+- Implementation notes: keep the adapter narrow and explicit. The mock provider should simulate 30–120 second latency and return realistic synthetic data for development and testing.
+- Test notes: add interface, contract, and mock-output tests.
 - Dependencies: E4-S4.
 
 #### E5-S2 - Execute generation as a background job
@@ -363,11 +365,12 @@ A story is done when:
 
 ### Epic Body
 - Goal: let the user deliver final assets through direct publishing or export fallback.
-- Source artifact references: [PRD](prd.md) Publishing, [UX Spec](ux-spec.md) Publish Experience, [Implementation Plan](implementation-plan.md) Phase 6.
-- In scope: publish job orchestration, publish history, export/download, finalized asset handling.
+- Source artifact references: [PRD](prd.md) Publishing, [UX Spec](ux-spec.md) Publish Experience, [Implementation Plan](implementation-plan.md) Phase 6 and Decision Log (Publishing Platform Staging).
+- In scope: publish job orchestration, publish history, export/download, finalized asset handling. Direct publish targets are Instagram and TikTok only.
+- Deferred: Facebook and YouTube Shorts direct publishing (post-MVP).
 - Dependencies: Epic 5.
-- Exit criteria: the user can publish or export a finalized asset from the project view.
-- Out of scope: social scheduling, campaign dashboards, and multi-platform automation.
+- Exit criteria: the user can publish to Instagram or TikTok, or export a finalized asset from the project view.
+- Out of scope: social scheduling, campaign dashboards, multi-platform automation, Facebook, and YouTube Shorts.
 
 ### Stories
 #### E6-S1 - Support publish job orchestration
@@ -528,3 +531,13 @@ This is the first-pass scrum order for MVP delivery.
 - Split anything that mixes backend, frontend, and infra into smaller stories if it is too large for a sprint.
 - Treat the PRD as the product authority, the UX spec as the interaction authority, the technical spec as the architecture authority, and the implementation plan as the sequencing authority.
 - Re-check the docs whenever a story is split so the backlog stays aligned with the product vision.
+
+## Deferred Items
+The following items are explicitly deferred from the MVP backlog. They are described in the PRD and UX spec but are not scheduled for the current release.
+
+- **Creative Vault**: The persistent searchable library of inspirations, hooks, concepts, and references. Inspiration inputs are still accepted as part of the research step. The vault as a first-class browsable library is post-MVP.
+- **Inspiration Import Flow**: The dedicated share/paste/upload flow with creative pattern extraction. Handled as a research input, not a standalone feature.
+- **Facebook Direct Publishing**: Deferred. Instagram and TikTok are the first two direct-publish targets.
+- **YouTube Shorts Direct Publishing**: Deferred. Instagram and TikTok are the first two direct-publish targets.
+
+When any deferred item is brought back into scope, it should be specified as a new epic with its own stories, referencing the PRD and UX spec sections that define it.

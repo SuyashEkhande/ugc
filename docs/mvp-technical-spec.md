@@ -54,10 +54,12 @@ Strategy before generation. The system behaves like a creative strategist, not a
 - Use a simple ReAct-style agent only as a narrow helper for step-level LLM tasks, not as the product workflow engine
 
 ### AI Provider
-- Video model provider is intentionally unresolved for MVP
+- The concrete video model provider is unresolved for MVP; the system builds against a mock output contract
+- The mock contract defines minimum acceptable outputs: script text, storyboard frames, rendered video (MP4), and metadata
 - Used for generation only, not product logic
 - Calls must go through backend provider adapters
-- Provider selection stays swappable until a concrete provider is integrated
+- Provider selection stays swappable; the real provider is integrated when chosen without changing product flow
+- Mock assumptions: 30–120 second latency per variation, 1 credit per variation
 
 ### Shared Contracts
 - Request and response schemas
@@ -165,19 +167,24 @@ Generation behavior:
 - Approval required before generation
 
 Implementation note:
-- Keep the video generation provider field empty in the initial system configuration
-- The backend exposes a provider interface so the model can be added without changing product flow
+- Build against the mock output contract in the initial system configuration
+- The backend exposes a provider interface so the real model can be added without changing product flow
+- The mock provider returns synthetic outputs that match the contract shape for development and testing
 
 ### 7. Publishing
 Publishing must support direct publish where possible and export fallback.
 
 MVP targets:
-- Instagram
-- TikTok
+- Instagram (first direct-publish path)
+- TikTok (second direct-publish path)
+
+Deferred to post-MVP:
 - Facebook
 - YouTube Shorts
 
-If direct publish is unavailable, the user must still be able to download/export.
+Export/download is the universal fallback and ships before any direct-publish integration.
+
+If direct publish is unavailable for a connected platform, the user must still be able to download/export.
 
 ### 8. Billing and Credits
 Credits are in scope for MVP.
@@ -187,6 +194,14 @@ Requirements:
 - Deduct credits for generation and other billable operations
 - Surface low-credit states clearly
 - Block generation when credits are insufficient
+
+## Deferred for MVP v1
+The following product concepts are described in the PRD and UX spec but are explicitly deferred from the MVP backlog:
+
+- **Creative Vault**: The persistent searchable library of inspirations, hooks, concepts, and references. Inspiration inputs are still accepted as part of the research step through uploaded assets and user-provided links. The vault as a first-class browsable library is post-MVP.
+- **Inspiration Import Flow**: The dedicated share/paste/upload flow with creative pattern extraction. Inspiration upload is handled as a research input, not as a standalone feature.
+- **Facebook Publishing**: Deferred to post-MVP. Instagram and TikTok are the first two direct-publish targets.
+- **YouTube Shorts Publishing**: Deferred to post-MVP.
 
 ## Recommended Architecture
 ### Frontend Responsibilities

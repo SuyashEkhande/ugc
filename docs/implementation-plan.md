@@ -495,6 +495,38 @@ Why this is the best fit for MVP:
 - SQLAlchemy and Alembic own the backend persistence path.
 - The repo should optimize for clarity, speed, and recoverability over abstraction-heavy architecture.
 
+### Generation Provider Strategy
+- Context: The CTO review flagged the unresolved video provider as the single highest-risk item. The adapter pattern is correct, but the product cannot be built without knowing what outputs the provider produces.
+- Options considered:
+  1. Pick a concrete provider now and build against it.
+  2. Build against a mock output contract and slot the real provider in later.
+- Chosen option: Build against a mock output contract.
+- Reason: The adapter interface already isolates provider-specific behavior. A mock contract lets the team build the full generation UX, credit model, and output review screen without waiting for provider evaluation. The mock contract defines the minimum acceptable outputs (scripts, storyboards, reference frames, rendered video), format constraints (aspect ratios, resolution, duration), and latency expectations. The real provider is integrated when the adapter is ready, without changing product flow.
+- Minimum mock output contract:
+  - Input: creative plan JSON, variation count, aspect ratio preferences.
+  - Output: script text, storyboard frames (image URLs), rendered video (MP4 URL), metadata (duration, resolution, provider job ID).
+  - Latency assumption: 30–120 seconds per variation for mock; real provider latency will be measured during integration.
+  - Cost assumption: 1 credit per variation for mock; real credit cost will be set after provider pricing is known.
+
+### Publishing Platform Staging
+- Context: The CTO review flagged four simultaneous platform integrations as a schedule risk. Each platform has different OAuth, media constraints, and API behaviors.
+- Options considered:
+  1. Build all four platforms simultaneously.
+  2. Ship one platform first, stage the rest.
+  3. Ship export/download only, defer all direct publishing.
+- Chosen option: Ship Instagram and TikTok as the first two direct-publish targets. Facebook and YouTube Shorts are deferred to post-MVP.
+- Reason: Instagram and TikTok are the strongest UGC platforms for the target audience (D2C brands). Narrowing from four to two cuts integration surface in half while preserving the direct-publish value proposition. Export/download ships as the universal fallback regardless.
+
+### Creative Vault Deferral
+- Context: The CTO review noted that Creative Vault and Inspiration Import are described as core concepts in the PRD and UX spec but have no epic, story, or module allocation in the backlog or tech spec.
+- Options considered:
+  1. Build the full vault with search, filters, collections, and favorites.
+  2. Build a minimal vault (save/list inspirations, no advanced features).
+  3. Defer entirely to post-MVP.
+- Chosen option: Defer to post-MVP. The vault is not on the critical path for the first vertical slice. The core workflow (Brand Brain → Project → Interview → Research → Plan → Approval → Generate → Publish/Download) does not depend on it.
+- Reason: Adding vault surface area increases the sprint count and spreads the team across non-critical UI without strengthening the core loop. Inspiration inputs can still be accepted as part of the research step through uploaded assets and user-provided links, which are already in scope. The vault as a first-class browsable library is post-MVP.
+- Follow-up: When the vault is brought back into scope, it should be specified as a new epic with its own stories, referencing the PRD and UX spec sections that define it.
+
 ## MVP Guardrails
 - Do not add campaign management.
 - Do not add analytics dashboards.
