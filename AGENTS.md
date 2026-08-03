@@ -105,6 +105,11 @@ Do not introduce:
 - Update that file whenever a pattern of mistakes is observed during reviews or retrospectives.
 - Use it as a living checklist that developers review before submitting changes.
 
+## Developer Harness & Token Efficiency
+- Developers working with AI CLI tools (Claude Code, Cursor, Aider) should install context compression tools such as **RTK** (`rtk-ai/rtk`) or **Headroom** (`headroomlabs-ai/headroom`).
+- `rtk` (Rust Token Killer) compresses shell output (git status, test logs, linter outputs) by 60–90% before it hits the LLM context window.
+- Wrap long terminal outputs with `rtk` (e.g. `rtk pytest`, `rtk git status`, `rtk npx tsc`) to optimize token usage across developer sessions.
+
 ## Safety and Quality Notes
 - Avoid copyright-risky language such as clone, copy, or recreate an existing creator’s work.
 - Use consistent terminology: Brand Brain, Creative Vault, Creative Plan, Generation, Publishing.
