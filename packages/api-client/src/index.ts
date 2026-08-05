@@ -1,3 +1,5 @@
+import type { HealthResponse } from "@ugc/contracts";
+
 export interface ApiClientOptions {
   baseUrl: string;
 }
@@ -18,4 +20,8 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
       return res.json() as Promise<T>;
     },
   };
+}
+
+export async function getHealth(client: ApiClient): Promise<HealthResponse> {
+  return client.request<HealthResponse>("/health");
 }
