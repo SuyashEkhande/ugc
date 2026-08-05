@@ -105,6 +105,20 @@ Do not introduce:
 - Update that file whenever a pattern of mistakes is observed during reviews or retrospectives.
 - Use it as a living checklist that developers review before submitting changes.
 
+## Task Lifecycle
+- Every task gets a folder `docs/tasks/<task-id>/` with a `task.md` plan written before any code.
+- `task.md` follows the template in `docs/tasks/_template/task.md`: objective, scope, source references, acceptance criteria, dependencies, status, delivery (PR link + date), skept notes.
+- Track status in `task.md`: `planned` / `in-progress` / `done` / `blocked`.
+- Record technical and architecture decisions made during a task in `docs/tasks/<task-id>/decisions.md`, and roll significant ones up into the Decision Log in `docs/implementation-plan.md` (append, never overwrite).
+- Keep architecture diagrams for the task in `docs/tasks/<task-id>/architecture.md` using Mermaid.
+- When closing a task, flip status to `done`, add the merged PR link and date, and fill the skept notes: does the implementation match the plan, what drifted, was the drift justified.
+- Do not mark a task done until its PR is merged and the skept pass is complete.
+
+## GitHub Workflow
+- Use the GitHub CLI (`gh`) for all GitHub activity: creating branches, PRs (`gh pr create`), merging (`gh pr merge`), issues, and browsing. Do not bypass it with raw push + manual PR creation.
+- Work on short-lived branches off `main` and open one PR per task.
+- A task is only `done` after its PR is merged.
+
 ## Developer Harness & Token Efficiency
 - Developers working with AI CLI tools (Claude Code, Cursor, Aider) should install context compression tools such as **RTK** (`rtk-ai/rtk`) or **Headroom** (`headroomlabs-ai/headroom`).
 - `rtk` (Rust Token Killer) compresses shell output (git status, test logs, linter outputs) by 60–90% before it hits the LLM context window.
