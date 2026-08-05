@@ -24,12 +24,15 @@ Make FastAPI's OpenAPI output the source of truth for cross-stack contracts and 
 - e1-initial-scaffold.
 
 ## Status
-`planned`
+`done`
 
 ## Delivery
-- PR: _link_
-- Merged: _date_
-- Commits: _range or hashes_
+- PR: https://github.com/SuyashEkhande/ugc/pull/4
+- Merged: 2026-08-06
+- Commits: `396bc41`
 
 ## Skept Notes
-_To be filled at close-out._
+- Implementation matches the plan. FastAPI OpenAPI is the source of truth; `openapi-typescript` generates `packages/contracts/src/openapi.d.ts`; `contracts:check` gates drift.
+- Drift 1 (justified): the seed contract is `HealthResponse` + `ProjectStatus`/`ProjectSummary`/`ProjectListResponse`, surfaced via a minimal `GET /projects` scaffold endpoint (backlog API surface lists `GET /projects`). No real persistence yet — the endpoint returns an empty list.
+- Drift 2 (justified): export runs offline via `scripts/export_openapi.py` (imports the app and dumps `app.openapi()`), not by booting a live server. Faster and deterministic for CI.
+- Note: `openapi.d.ts` may show a CRLF/LF warning under `core.autocrlf`; harmless — stored as LF, normalized on checkout.

@@ -546,6 +546,17 @@ Why this is the best fit for MVP:
 - Chosen option: FastAPI OpenAPI is the contract source of truth; TS types are generated into `packages/contracts`.
 - Reason: Matches the locked Grooming Round 4/5 decision and removes the drift risk of hand-maintained duplicates. Confirmed while scaffolding.
 
+### Contract Generation Pipeline (2026-08-06)
+- Context: E1-S2 needed a repeatable, drift-checked path from FastAPI OpenAPI to frontend TypeScript types.
+- Options considered: live-server fetch of `/openapi.json`; offline `app.openapi()` export.
+- Chosen option: offline export via `apps/api/scripts/export_openapi.py` writing `packages/contracts/openapi.json`, then `openapi-typescript` generates `packages/contracts/src/openapi.d.ts`. Both raw JSON and generated types are committed so `contracts:check` can diff against a baseline.
+- Reason: deterministic in CI, no port management, and committed baselines make contract drift reviewable in PRs.
+
+### Seed Contract (2026-08-06)
+- Context: the pipeline needed a real domain contract to prove end-to-end generation.
+- Chosen option: `ProjectStatus` (all 10 states from the technical spec) with `ProjectSummary` and `ProjectListResponse`, served by a scaffold `GET /projects` endpoint returning an empty list.
+- Reason: project state is the highest-leverage cross-stack contract; E3-S2 builds the state machine against these generated types.
+
 ## MVP Guardrails
 - Do not add campaign management.
 - Do not add analytics dashboards.
