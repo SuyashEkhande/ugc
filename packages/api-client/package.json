@@ -8,6 +8,9 @@
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@ugc/contracts": "0.1.0"
+  },
   "devDependencies": {
     "typescript": "^5"
   }

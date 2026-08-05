@@ -14,7 +14,13 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present"
+    "test": "npm run test --workspaces --if-present",
+    "contracts:export": "cd apps/api && uv run python scripts/export_openapi.py",
+    "contracts:generate": "npm run contracts:export && openapi-typescript packages/contracts/openapi.json -o packages/contracts/src/openapi.d.ts",
+    "contracts:check": "npm run contracts:generate && git diff --exit-code -- packages/contracts"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7"
   },
   "engines": {
     "node": ">=20"
