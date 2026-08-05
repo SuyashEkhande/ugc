@@ -23,12 +23,15 @@ Provide a one-command local stack for Postgres, Redis, and MinIO-compatible obje
 - e1-initial-scaffold.
 
 ## Status
-`planned`
+`done`
 
 ## Delivery
-- PR: _link_
-- Merged: _date_
-- Commits: _range or hashes_
+- PR: https://github.com/SuyashEkhande/ugc/pull/6
+- Merged: 2026-08-06
+- Commits: `a674915`
 
 ## Skept Notes
-_To be filled at close-out._
+- Implementation matches the plan: compose.yaml (postgres/redis/minio + bucket init), env examples at root and per app, smoke script, infra docs.
+- Drift 1 (justified): smoke verification could NOT be executed — Docker and bash are not installed on this dev machine. `compose.yaml` YAML is validated; the run is deferred to the CI compose-smoke job (E8-S4).
+- Drift 2 (justified): minio healthcheck uses `curl` (present in the minio image), not `mc ready`.
+- Drift 3 (justified): apps/web/.gitignore needed `!.env.example` because create-next-app's `.env*` rule blocked committing the web env example.
