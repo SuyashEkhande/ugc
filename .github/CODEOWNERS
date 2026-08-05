@@ -1,0 +1,24 @@
+# Code owners for AI Creative Studio monorepo.
+
+# Backend
+/apps/api/**        @SuyashEkhande
+/apps/worker/**     @SuyashEkhande
+
+# Frontend
+/apps/web/**        @SuyashEkhande
+
+# Shared packages
+/packages/**        @SuyashEkhande
+
+# Infrastructure and tooling
+/infra/**           @SuyashEkhande
+/compose.yaml       @SuyashEkhande
+/scripts/**         @SuyashEkhande
+
+# CI and governance
+/.github/**         @SuyashEkhande
+/AGENTS.md          @SuyashEkhande
+/README.md          @SuyashEkhande
+
+# Documentation
+/docs/**            @SuyashEkhande
