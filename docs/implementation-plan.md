@@ -564,6 +564,13 @@ Why this is the best fit for MVP:
 - Reason: matches Grooming Round 6; the init container makes bucket creation automatic and idempotent without hidden entrypoint magic.
 - Note: `scripts/smoke.sh` gates the stack in CI (E8-S4); Docker was not available on the scaffolding machine, so local run is pending that job.
 
+### CI Job Shape (2026-08-06)
+- Context: Grooming Round 7 lists per-app jobs; api and worker share the same uv/ruff/mypy toolchain.
+- Options considered: separate jobs per app; shared jobs per tool covering both apps.
+- Chosen option: shared `api-lint` and `api-typecheck` jobs run against both apps; `api-test` stays dedicated (pytest exists only in api for now); `compose-smoke` runs nightly + manual dispatch, not on PRs.
+- Reason: same coverage, fewer runner minutes, fast PR loop.
+- Follow-up: enabling protected `main` (required checks + review) is a GitHub repo setting and must be done in the repo UI.
+
 ## MVP Guardrails
 - Do not add campaign management.
 - Do not add analytics dashboards.
