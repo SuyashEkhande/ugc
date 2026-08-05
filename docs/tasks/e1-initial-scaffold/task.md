@@ -24,12 +24,15 @@ Create the monorepo layout and minimal, bootable app shells for the frontend, ba
 - Task 0 (hygiene), Task 1 (docs framework).
 
 ## Status
-`planned`
+`done`
 
 ## Delivery
-- PR: _link_
-- Merged: _date_
-- Commits: _range or hashes_
+- PR: https://github.com/SuyashEkhande/ugc/pull/2
+- Merged: 2026-08-06
+- Commits: `4cb1254`
 
 ## Skept Notes
-_To be filled at close-out._
+- Implementation matches the plan. Repo layout per Grooming Round 2: `apps/web`, `apps/api`, `apps/worker`, `packages/contracts`, `packages/api-client`, `infra`, `docs`.
+- Drift 1 (justified): package manager is **npm workspaces**, not pnpm — pnpm not installed on the dev machine, npm is native and sufficient for 2 apps + 2 packages. Recorded in `decisions.md`.
+- Drift 2 (justified): `create-next-app` failed on a missing parent dir, retried after creating `apps/`; generated Next 16.3 + Tailwind v4 defaults kept.
+- Drift 3 (justified): compose.yaml deferred to e1-local-infra by design; `infra/` holds a placeholder README only.
