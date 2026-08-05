@@ -6,7 +6,7 @@
 This folder is the canonical documentation root for the MVP. It contains the product vision, UX definition, technical architecture, implementation sequencing, and the execution backlog.
 
 **Current Doc Set Version:** 1.0
-**Last Updated:** 2026-08-04
+**Last Updated:** 2026-08-06
 **Status:** Active MVP documentation
 
 ## Reading Order
@@ -55,6 +55,18 @@ That order moves from product intent, to experience design, to technical archite
 **Use it for:** turning the MVP plan into execution-ready work items that can be picked up in sprint planning.
 
 **Versioning note:** update this file whenever stories are split, reordered, or re-estimated.
+
+### [Tasks](tasks/)
+**What it contains:** one folder per task under `docs/tasks/<task-id>/`, holding `task.md` (plan, acceptance criteria, status, PR link), `decisions.md` (task-level technical decisions), and `architecture.md` (Mermaid diagrams). Templates live in `docs/tasks/_template/`.
+
+**Use it for:** the canonical record of every task from plan, through implementation, to done-with-PR-link. Written before code; status tracked until close-out.
+
+**Versioning note:** `task.md` status flips on completion with PR link and date; decisions roll up into the Decision Log in [implementation-plan.md](implementation-plan.md).
+
+### [Decisions](decisions/) and [Architecture](architecture/)
+**What they contain:** centralized home for cross-cutting technical decisions and architecture diagrams that span multiple tasks.
+
+**Use it for:** global or cross-task decision records and diagrams. Task-local decisions and diagrams stay in `docs/tasks/<task-id>/`.
 
 ## Canonical Artifact Rules
 - `prd.md` is the source of truth for product vision and scope.
