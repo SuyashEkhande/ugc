@@ -557,6 +557,13 @@ Why this is the best fit for MVP:
 - Chosen option: `ProjectStatus` (all 10 states from the technical spec) with `ProjectSummary` and `ProjectListResponse`, served by a scaffold `GET /projects` endpoint returning an empty list.
 - Reason: project state is the highest-leverage cross-stack contract; E3-S2 builds the state machine against these generated types.
 
+### Local Infra Bootstrap (2026-08-06)
+- Context: E1-S3 needed Postgres/Redis/MinIO locally for the api, worker, and web apps.
+- Options considered: full compose including apps; data-only compose.
+- Chosen option: data-only `compose.yaml` (postgres, redis, minio + one-shot `minio-init` bucket bootstrap); apps run locally in watch mode.
+- Reason: matches Grooming Round 6; the init container makes bucket creation automatic and idempotent without hidden entrypoint magic.
+- Note: `scripts/smoke.sh` gates the stack in CI (E8-S4); Docker was not available on the scaffolding machine, so local run is pending that job.
+
 ## MVP Guardrails
 - Do not add campaign management.
 - Do not add analytics dashboards.
