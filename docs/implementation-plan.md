@@ -527,6 +527,25 @@ Why this is the best fit for MVP:
 - Reason: Adding vault surface area increases the sprint count and spreads the team across non-critical UI without strengthening the core loop. Inspiration inputs can still be accepted as part of the research step through uploaded assets and user-provided links, which are already in scope. The vault as a first-class browsable library is post-MVP.
 - Follow-up: When the vault is brought back into scope, it should be specified as a new epic with its own stories, referencing the PRD and UX spec sections that define it.
 
+### Monorepo Package Manager (2026-08-06)
+- Context: The E1-S1 scaffold needed a workspace manager for `apps/*` and `packages/*`. Grooming Round 2 left the choice open.
+- Options considered: pnpm workspaces; npm workspaces; Turborepo on top of either.
+- Chosen option: npm workspaces, no task runner.
+- Reason: pnpm is not installed on the current dev machine; npm is native to node 24 and sufficient for two apps and two packages. Turborepo is deferred until build/script orchestration actually repeats.
+- Supersedes/refines: Grooming Round 2 (Codebase Shape) — same monorepo decision, concrete package manager now locked.
+
+### Python Env Tool (2026-08-06)
+- Context: The api and worker are separate Python packages in the monorepo.
+- Options considered: uv; poetry; pip + venv.
+- Chosen option: uv with per-app `pyproject.toml`.
+- Reason: uv is installed and fast, and keeps each Python app a self-contained package while the apps run locally in watch mode.
+
+### Contract Source of Truth (2026-08-06)
+- Context: `apps/web` (TS) and `apps/api`/`apps/worker` (Python) cannot share code directly, so cross-stack contracts must come from one place.
+- Options considered: hand-authoring duplicated types; generating TS from the API's OpenAPI output.
+- Chosen option: FastAPI OpenAPI is the contract source of truth; TS types are generated into `packages/contracts`.
+- Reason: Matches the locked Grooming Round 4/5 decision and removes the drift risk of hand-maintained duplicates. Confirmed while scaffolding.
+
 ## MVP Guardrails
 - Do not add campaign management.
 - Do not add analytics dashboards.
